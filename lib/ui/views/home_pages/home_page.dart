@@ -12,7 +12,6 @@ import 'package:test_example_with_cloud_storage/ui/shared/global_methods.dart';
 import 'package:test_example_with_cloud_storage/ui/shared/responsive.dart';
 import 'package:test_example_with_cloud_storage/ui/views/home_pages/crud_post.dart';
 
-
 import 'package:test_example_with_cloud_storage/ui/widgets/appbar_title.dart';
 import 'package:test_example_with_cloud_storage/ui/widgets/label_card.dart';
 
@@ -22,7 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   //get theme value from shared preferences, at the beginning it's already false
   bool themeNewValue = LocalStorageService.getThemeValue;
   File _pickedUpDocument;
@@ -31,9 +29,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final themeData = Provider.of<ThemeService>(context, listen: true);
-    _loginControlViewModel = Provider.of<LoginControlViewModel>(context, listen: true);
+    _loginControlViewModel =
+        Provider.of<LoginControlViewModel>(context, listen: true);
 
     SizeConfig().init(context);
     return GestureDetector(
@@ -98,17 +96,14 @@ class _HomePageState extends State<HomePage> {
                         width: SizeConfig.safeBlockHorizontal * 25,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(55),
-                          child: LocalStorageService.getImage.isNotEmpty
-                              ? FadeInImage.assetNetwork(
+                          child: FadeInImage.assetNetwork(
                                   placeholder: "assets/images/resim-yok.png",
                                   image: "${_loginControlViewModel.user.image}",
                                   fadeInCurve: Curves.easeIn,
-                                )
-                              : Image.asset("assets/images/resim-yok.png"),
+                                ),
                         ),
                       ),
-                      GlobalMethods()
-                          .sizedBox(height: SizeConfig.safeBlockVertical * 2),
+                      GlobalMethods().sizedBox(height: SizeConfig.safeBlockVertical * 2),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -116,14 +111,14 @@ class _HomePageState extends State<HomePage> {
                           showBarrier(),
                           iconButton(Icons.cloud_upload, () {}),
                           showBarrier(),
-                          iconButton(
-                              Icons.image, () => _uploadImageFromGallery())
+                          iconButton(Icons.image, () => _uploadImageFromGallery())
                         ],
                       ),
                     ],
                   ),
                 ),
-                GlobalMethods().sizedBox(height: SizeConfig.safeBlockVertical * 5),
+                GlobalMethods()
+                    .sizedBox(height: SizeConfig.safeBlockVertical * 5),
                 SizedBox(height: 20),
                 Container(
                   alignment: Alignment.center,
@@ -131,10 +126,13 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      labelCard('Welcome to the system',),
+                      labelCard(
+                        'Hi ${_loginControlViewModel.user.name}',
+                      ),
                       GlobalMethods().sizedBox(height: 25),
-                      labelCard(_loginControlViewModel.user.name,),
-                      labelCard(_loginControlViewModel.user.mail,),
+                      labelCard("Name : ${_loginControlViewModel.user.name}"
+                      ),
+                      labelCard("Mail : ${_loginControlViewModel.user.mail}"),
                     ],
                   ),
                 ),
@@ -145,9 +143,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget labelCard(String label) {
-    return LabelCard(label: label,
-    textAlign: TextAlign.left,
-    fontSize: SizeConfig.safeBlockHorizontal * 5.5,);
+    return LabelCard(
+      label: label,
+      textAlign: TextAlign.left,
+      fontSize: SizeConfig.safeBlockHorizontal * 5.5,
+    );
   }
 
   Widget showBarrier() {
@@ -158,7 +158,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget iconButton(IconData icon, Function onPressed,{Color color = Colors.black}) {
+  Widget iconButton(IconData icon, Function onPressed,
+      {Color color = Colors.black}) {
     return IconButton(
         icon: Icon(
           icon,
@@ -176,7 +177,9 @@ class _HomePageState extends State<HomePage> {
         _pickedUpDocument = image;
       });
       StorageReference ref = FirebaseStorage.instance
-          .ref().child("${_loginControlViewModel.user.id}").child("${_loginControlViewModel.user.name}.png");
+          .ref()
+          .child("${_loginControlViewModel.user.id}")
+          .child("${_loginControlViewModel.user.name}.png");
       StorageUploadTask uploadTask = ref.putFile(_pickedUpDocument);
 
       var url = await (await uploadTask.onComplete).ref.getDownloadURL();
@@ -185,7 +188,7 @@ class _HomePageState extends State<HomePage> {
           .saveImageURL(url, _loginControlViewModel.user.id)
           .then((response) {
         if (response == "true") {
-          return true;
+          setState(() {});
         } else {
           return false;
         }

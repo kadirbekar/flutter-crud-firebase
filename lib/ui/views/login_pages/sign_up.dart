@@ -66,6 +66,7 @@ class _SignupPageState extends State<SignupPage> {
                 MyTextFormField(
                   controller: mailController,
                   label: 'Mail',
+                  textInputType: TextInputType.emailAddress,
                   satirSayisi: 1,
                 ),
                 GlobalMethods()

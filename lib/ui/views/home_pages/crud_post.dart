@@ -197,8 +197,10 @@ class _CrudPostState extends State<CrudPost> {
               .deleteAllPosts()
               .then((response) {
             print("All posts deleted");
-            allPosts.clear();
-            setState(() {});
+            
+            setState(() {
+              allPosts.clear();
+            });
           }).catchError((error) {
             print(error.toString());
           });
