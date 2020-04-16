@@ -70,29 +70,56 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 GlobalMethods()
                     .sizedBox(height: SizeConfig.safeBlockVertical * 2),
-                Container(
-                  height: SizeConfig.safeBlockVertical * 8.3,
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: Colors.teal,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    onPressed: () {
-                      var id = _firestore.collection("users").document().documentID;
-                      Provider.of<SignupViewModel>(context, listen: false)
-                          .createUser(User(
-                              id: id,
-                              name: nameController.text,
-                              password: passwordController.text,
-                              mail: mailController.text))
-                          .then((u) => print("added successfully"));
-                    },
-                    child: LabelCard(
-                      fontSize: SizeConfig.safeBlockHorizontal * 5.7,
-                      label: text.signUp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                Builder(
+                  builder: (context) => Container(
+                    height: SizeConfig.safeBlockVertical * 8.3,
+                    width: double.infinity,
+                    child: RaisedButton(
+                      color: Colors.teal,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      onPressed: () {
+                        var id = _firestore
+                            .collection("users")
+                            .document()
+                            .documentID;
+                        Provider.of<SignupViewModel>(context, listen: false)
+                            .createUser(User(
+                                id: id,
+                                name: nameController.text,
+                                password: passwordController.text,
+                                mail: mailController.text))
+                            .then((u) {
+                          print("added successfully");
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                              duration: Duration(seconds: 2),
+                              content: Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    LabelCard(
+                                      label:
+                                          "User added successfully, let's login",
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4.5,
+                                    ),
+                                    GlobalMethods().sizedBox(width: 10),
+                                    Icon(
+                                      Icons.done_all,
+                                      size: SizeConfig.safeBlockHorizontal * 8,
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ),
+                              )));
+                        });
+                      },
+                      child: LabelCard(
+                        fontSize: SizeConfig.safeBlockHorizontal * 5.7,
+                        label: text.signUp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
