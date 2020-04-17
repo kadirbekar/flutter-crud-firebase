@@ -8,7 +8,7 @@
 •Keep login with shared preferences and init user data into provider<br>
 •Regex e-mail and password control<br>
 
-When i'm stuck somewhere while coding i get some help from these sources and i suggest you to follow these guys, they are really good: 
+When i'm stuck somewhere while coding i get some help from these sources and i suggest you to follow these guys, they are really good:<br> 
 https://www.filledstacks.com/post/firestore-crud-in-flutter/ = Dane Mackier
 https://www.youtube.com/channel/UC4hWRtPpBaq72ERUuKsvO7g = Easy Approach , Maaz Aftab<br><br>
 
